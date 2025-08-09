@@ -19,9 +19,9 @@ export default defineConfig({
   },
   
   // Base path for the application
-  // Set to your repository name for GitHub Pages deployment
-  // e.g., '/eduapp/' if your repo is https://github.com/username/eduapp
-  base: process.env.NODE_ENV === 'production' ? '/eduapp/' : '/',
+  // For Cloudflare Pages, use '/' as the base path
+  // For GitHub Pages, use '/repo-name/' format
+  base: process.env.DEPLOY_TARGET === 'github' ? '/eduapp/' : '/',
   
   // Configure asset handling
   assetsInclude: ['**/*.md'],

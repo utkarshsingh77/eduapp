@@ -1,10 +1,48 @@
 import OpenAI from 'openai';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true // Note: In production, you should use a backend server
-});
+// Check if we're in production (deployed) or development
+const isProduction = import.meta.env.PROD;
+
+// Initialize OpenAI client only in development
+let openai = null;
+if (!isProduction && import.meta.env.VITE_OPENAI_API_KEY) {
+    openai = new OpenAI({
+        apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true // Only for development
+    });
+}
+
+// Helper function to make API calls
+async function callOpenAI(messages, model = 'gpt-3.5-turbo', temperature = 0.7) {
+    if (isProduction || !openai) {
+        // Use backend API endpoint in production
+        const response = await fetch('/api/openai', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                messages,
+                model,
+                temperature
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'API request failed');
+        }
+
+        return await response.json();
+    } else {
+        // Use direct OpenAI client in development
+        return await openai.chat.completions.create({
+            model,
+            messages,
+            temperature,
+        });
+    }
+}
 
 // Helper function to create a safe prompt
 function createPrompt(systemPrompt, userContent) {
@@ -32,12 +70,11 @@ export async function generateLessonPlan(topic, userType, gradeLevel, duration, 
     Format the response as HTML with appropriate sections and styling classes that match the existing UI.`;
 
     try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: createPrompt(systemPrompt, userContent),
-            temperature: 0.7,
-            max_tokens: 1500
-        });
+        const response = await callOpenAI(
+            createPrompt(systemPrompt, userContent),
+            "gpt-4o-mini",
+            0.7
+        );
 
         return response.choices[0].message.content;
     } catch (error) {
@@ -59,12 +96,11 @@ export async function generateActivities(topic, userType, gradeLevel, duration, 
     Include a mix of individual, pair, and group activities. Format as HTML with clear instructions, time allocations, and materials needed.`;
 
     try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: createPrompt(systemPrompt, userContent),
-            temperature: 0.8,
-            max_tokens: 1200
-        });
+        const response = await callOpenAI(
+            createPrompt(systemPrompt, userContent),
+            "gpt-4o-mini",
+            0.8
+        );
 
         return response.choices[0].message.content;
     } catch (error) {
@@ -89,12 +125,11 @@ export async function generateQuiz(topic, gradeLevel, assessmentType = 'standard
     Provide answer keys and sample answers. Format as HTML with appropriate styling.`;
 
     try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: createPrompt(systemPrompt, userContent),
-            temperature: 0.6,
-            max_tokens: 1000
-        });
+        const response = await callOpenAI(
+            createPrompt(systemPrompt, userContent),
+            "gpt-4o-mini",
+            0.6
+        );
 
         return response.choices[0].message.content;
     } catch (error) {
@@ -120,12 +155,11 @@ export async function generateSubPack(topic, gradeLevel, duration) {
     Make it so clear that anyone could teach this lesson successfully with no preparation.`;
 
     try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: createPrompt(systemPrompt, userContent),
-            temperature: 0.7,
-            max_tokens: 1500
-        });
+        const response = await callOpenAI(
+            createPrompt(systemPrompt, userContent),
+            "gpt-4o-mini",
+            0.7
+        );
 
         return response.choices[0].message.content;
     } catch (error) {
@@ -136,6 +170,11 @@ export async function generateSubPack(topic, gradeLevel, duration) {
 
 // Check if API key is configured
 export function isAPIKeyConfigured() {
+    // In production, we use the serverless function which has the API key
+    if (isProduction) {
+        return true;
+    }
+    // In development, check for the environment variable
     return !!import.meta.env.VITE_OPENAI_API_KEY && 
            import.meta.env.VITE_OPENAI_API_KEY !== 'your_openai_api_key_here';
 }
