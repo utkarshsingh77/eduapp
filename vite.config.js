@@ -19,7 +19,9 @@ export default defineConfig({
   },
   
   // Base path for the application
-  base: './',
+  // Set to your repository name for GitHub Pages deployment
+  // e.g., '/eduapp/' if your repo is https://github.com/username/eduapp
+  base: process.env.NODE_ENV === 'production' ? '/eduapp/' : '/',
   
   // Configure asset handling
   assetsInclude: ['**/*.md'],
