@@ -15,8 +15,6 @@
             <p class="tagline">Turn any topic into a standards-aligned lesson plan, activities, and quiz in under 2 minutes</p>
             <div class="user-types">
                 <span class="user-badge" onclick="selectUserType('teacher')">👩‍🏫 Teacher</span>
-                <span class="user-badge" onclick="selectUserType('substitute')">📚 Substitute</span>
-                <span class="user-badge" onclick="selectUserType('counselor')">💭 Counselor</span>
                 <span class="user-badge" onclick="selectUserType('coach')">🏃 Coach</span>
                 <span class="user-badge" onclick="selectUserType('therapist')">🧠 Therapist</span>
             </div>
@@ -37,8 +35,6 @@
                     <label for="userType">Educator Type</label>
                     <select id="userType" onchange="updateFormFields()">
                         <option value="teacher">K-12 Teacher</option>
-                        <option value="substitute">Substitute Teacher</option>
-                        <option value="counselor">School Counselor</option>
                         <option value="coach">Sports Coach</option>
                         <option value="therapist">Therapist</option>
                     </select>
@@ -92,10 +88,6 @@
                             <div>✅ Assessment</div>
                             <small>Include quiz</small>
                         </div>
-                        <div class="option-card" onclick="toggleOption(this, 'subready')">
-                            <div>📋 Sub-Ready</div>
-                            <small>Print & go pack</small>
-                        </div>
                     </div>
                 </div>
 
@@ -118,7 +110,6 @@
                     <button class="tab active" onclick="switchTab('lesson')">Lesson Plan</button>
                     <button class="tab" onclick="switchTab('activities')">Activities</button>
                     <button class="tab" onclick="switchTab('quiz')">Quiz</button>
-                    <button class="tab" onclick="switchTab('subpack')">Sub Pack</button>
                 </div>
 
                 <div id="lesson" class="tab-content active">
@@ -141,14 +132,6 @@
                     <div id="quizContent">
                         <p style="color: #6b7280; text-align: center; padding: 2rem;">
                             Quiz questions will appear here after generation
-                        </p>
-                    </div>
-                </div>
-
-                <div id="subpack" class="tab-content">
-                    <div id="subpackContent">
-                        <p style="color: #6b7280; text-align: center; padding: 2rem;">
-                            Substitute teacher pack will appear here if selected
                         </p>
                     </div>
                 </div>

@@ -1,15 +1,14 @@
 # EduForge: AI Lesson & Quiz Builder
 
-A modern web application that helps educators create standards-aligned lesson plans, activities, and assessments in under 2 minutes.
+A modern web application that helps teachers, coaches, and therapists create standards-aligned lesson plans, activities, and assessments in under 2 minutes.
 
 ## Features
 
 - **AI-Powered Generation**: Create comprehensive lesson plans with a single click
 - **Standards Alignment**: Supports Common Core, NGSS, NCSS, CASEL, and custom standards
-- **Multiple Educator Types**: Designed for teachers, substitutes, counselors, coaches, and therapists
+- **Multiple Educator Types**: Designed for teachers, coaches, and therapists
 - **Interactive Activities**: Generate hands-on learning experiences
 - **Assessment Tools**: Create quizzes with multiple question types
-- **Substitute Teacher Packs**: Complete, print-ready lesson materials
 - **Export Options**: Export to Google Forms, LMS systems, or download as JSON
 
 ## Project Structure
@@ -70,27 +69,19 @@ The built files will be in the `dist` directory.
 
 ## Using the Application
 
-1. **Fill in the form**: Enter your topic, select educator type, grade level, and duration
-2. **Choose options**: Select quick options like "Differentiated", "Interactive", etc.
-3. **Generate content**: Click "Generate Lesson & Materials" to create your lesson plan using AI
-4. **Explore tabs**: Switch between Lesson Plan, Activities, Quiz, and Sub Pack tabs
-5. **Export**: Use the export buttons to save or share your materials
+1. **Input Section**:
+   - **Topic**: Enter your subject or learning objective
+   - **Educator Type**: Choose your role (Teacher, Coach, Therapist)
+   - **Grade Level**: Select appropriate age group
+   - **Duration**: Choose lesson length
+   - **Standards**: Pick relevant standards framework (optional for coaches and therapists)
+   - **Quick Options**: Select additional features like differentiation or interactivity
+   - **Constraints**: Add any specific requirements
 
-## Usage
-
-### Input Panel
-- **Topic**: Enter any learning objective or subject matter
-- **Educator Type**: Choose your role (Teacher, Substitute, Counselor, Coach, Therapist)
-- **Grade Level**: Select appropriate age group (K-2, 3-5, 6-8, 9-12, Adult)
-- **Duration**: Set lesson length (15-90 minutes)
-- **Standards**: Choose relevant educational standards framework
-- **Quick Options**: Toggle additional features like differentiation, interactivity, etc.
-
-### Output Tabs
-- **Lesson Plan**: Complete lesson structure with objectives, standards, and timeline
-- **Activities**: Interactive exercises and worksheets
-- **Quiz**: Assessment questions with answer keys
-- **Sub Pack**: Substitute teacher instructions and materials
+2. **Output Section**:
+   - **Lesson Plan**: Complete, standards-aligned lesson structure
+   - **Activities**: Engaging, hands-on learning experiences
+   - **Quiz**: Assessment questions in various formats
 
 ### Export Options
 - **Google Forms**: Export quiz to Google Forms format
