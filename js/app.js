@@ -2,7 +2,6 @@ import {
     generateLessonPlan as aiGenerateLessonPlan, 
     generateActivities as aiGenerateActivities, 
     generateQuiz as aiGenerateQuiz, 
-    generateSubPack as aiGenerateSubPack,
     isAPIKeyConfigured 
 } from './openai-service.js';
 
@@ -20,9 +19,7 @@ function updateFormFields() {
     const standardsGroup = document.getElementById('standardsGroup');
     const standardsSelect = document.getElementById('standards');
     
-    if (userType === 'counselor') {
-        standardsSelect.value = 'casel';
-    } else if (userType === 'coach' || userType === 'therapist') {
+    if (userType === 'coach' || userType === 'therapist') {
         standardsGroup.style.display = 'none';
     } else {
         standardsGroup.style.display = 'block';
@@ -108,21 +105,11 @@ async function generateContent() {
                 .then(content => {
                     document.getElementById('activitiesContent').innerHTML = content;
                 }),
-            aiGenerateQuiz(topic, gradeLevel)
+            aiGenerateQuiz(topic, gradeLevel, constraints)
                 .then(content => {
                     document.getElementById('quizContent').innerHTML = content;
                 })
         ];
-        
-        // Add substitute pack if selected
-        if (selectedOptions.has('subready')) {
-            promises.push(
-                aiGenerateSubPack(topic, gradeLevel, duration)
-                    .then(content => {
-                        document.getElementById('subpackContent').innerHTML = content;
-                    })
-            );
-        }
         
         // Wait for all content to be generated
         await Promise.all(promises);

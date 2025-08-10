@@ -138,36 +138,6 @@ export async function generateQuiz(topic, gradeLevel, assessmentType = 'standard
     }
 }
 
-// Generate substitute teacher pack using OpenAI
-export async function generateSubPack(topic, gradeLevel, duration) {
-    const systemPrompt = `You are creating materials for a substitute teacher who has no prior knowledge of the class or topic. Create extremely detailed, step-by-step instructions that require zero preparation. Include exact scripts, timing, and contingency plans.`;
-    
-    const userContent = `Create a complete substitute teacher pack for a ${duration}-minute lesson on "${topic}" for ${gradeLevel} students.
-    
-    Include:
-    - Quick start instructions
-    - Detailed minute-by-minute schedule
-    - Exact teacher script (what to say)
-    - Behavior management tips
-    - 3 backup activities if time remains
-    - Emergency procedures
-    
-    Make it so clear that anyone could teach this lesson successfully with no preparation.`;
-
-    try {
-        const response = await callOpenAI(
-            createPrompt(systemPrompt, userContent),
-            "gpt-4o-mini",
-            0.7
-        );
-
-        return response.choices[0].message.content;
-    } catch (error) {
-        console.error('Error generating substitute pack:', error);
-        throw error;
-    }
-}
-
 // Check if API key is configured
 export function isAPIKeyConfigured() {
     // In production, we use the serverless function which has the API key
